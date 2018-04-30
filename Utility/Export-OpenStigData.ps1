@@ -43,11 +43,12 @@ Foreach ($CKL in $CKLs)
             if (($STIGData | Where-Object -FilterScript {$_.VulnID -eq $Stig.VulnID})) {
                 ($STIGData | Where-Object -FilterScript {$_.VulnID -eq $Stig.VulnID}).Count++;
             } else {
-                $ToAdd = New-Object -TypeName PSObject -Property @{VulnID=$Stig.VulnID;RuleTitle="";CheckContent="";FixText="";Comments=""}
+                $ToAdd = New-Object -TypeName PSObject -Property @{VulnID=$Stig.VulnID;RuleTitle="";CheckContent="";FixText="";Asset="";Comments=""}
                 $ToAdd.RuleTitle = Get-VulnInfoAttribute -XMLData $CKLData -VulnID $Stig.VulnID -Attribute "Rule_Title"
                 $ToAdd.CheckContent = Get-VulnInfoAttribute -XMLData $CKLData -VulnID $Stig.VulnID -Attribute "Check_Content"
                 $ToAdd.FixText = Get-VulnInfoAttribute -XMLData $CKLData -VulnID $Stig.VulnID -Attribute "Fix_Text"
                 #$ToAdd.Comments = Get-VulnInfoAttribute -XMLData $CKLData -VulnID $Stig.VulnID -Attribute "Comments"
+                $ToAdd.Asset = $Asset
                 $STIGData += $ToAdd
             }
         } else {
